@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { initializeApp, getApps, getApp } from "firebase-admin/app";
@@ -65,7 +65,7 @@ const firebaseApp = !getApps().length
 const auth: Auth = getAuth(firebaseApp);
 
 // http://localhost:3000/api/token?id_token=123
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   const searchParams = new URL(req.url ?? "").searchParams;
   const idToken = searchParams.get("id_token");
 
