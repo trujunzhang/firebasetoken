@@ -69,12 +69,19 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
   const searchParams = new URL(req.url ?? "").searchParams;
   const idToken = searchParams.get("id_token");
 
-  const user = await auth.verifyIdToken(idToken ?? "");
-  if (user) {
-    const custom_token = await auth.createCustomToken(user.uid);
-    res.setHeader("Content-Type", "application/json");
-    res.status(200).json({ custom_token });
-  } else {
-    res.status(500).json({ error: "failed to create custom token" });
-  }
+  return NextResponse.json(
+    { idToken },
+    {
+      status: 200,
+    },
+  );
+
+  // const user = await auth.verifyIdToken(idToken ?? "");
+  // if (user) {
+  //   const custom_token = await auth.createCustomToken(user.uid);
+  //   res.setHeader("Content-Type", "application/json");
+  //   res.status(200).json({ custom_token });
+  // } else {
+  //   res.status(500).json({ error: "failed to create custom token" });
+  // }
 }
